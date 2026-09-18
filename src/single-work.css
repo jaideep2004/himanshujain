@@ -1,0 +1,306 @@
+/* ——— Single Blog / Project Page Styles (1:1 Mobius /work/soma-studio) ——— */
+@import './style.css';
+
+/* Hero Split Layout */
+.project-hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #fff;
+  padding-top: 80px;
+}
+
+.project-hero-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  min-height: calc(100vh - 80px);
+}
+
+.project-hero-left {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 550px;
+  overflow: hidden;
+  background: #f4f4f4;
+}
+
+.project-hero-left img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.project-year-tag {
+  position: absolute;
+  bottom: 30px;
+  left: 40px;
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.project-hero-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 80px 80px 80px;
+}
+
+.project-giant-title {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 8.5vw, 120px);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  color: #000;
+  margin-bottom: 36px;
+}
+
+.project-intro-text {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: #333;
+  max-width: 520px;
+  margin-bottom: 48px;
+}
+
+.project-tags-list {
+  font-family: var(--font-display);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 480px;
+}
+
+/* Section Common Spacing & Headers */
+.project-content-section {
+  padding: 140px 0;
+  background: #fff;
+  position: relative;
+  border-top: 1px solid var(--border);
+}
+
+.section-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 60px;
+}
+
+.section-context-para {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+  max-width: 560px;
+}
+
+.section-index-num {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.12);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+/* Giant Statement (Challenge / Core Insight) */
+.project-statement {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.5vw, 68px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  color: #000;
+  max-width: 1100px;
+  margin: 40px 0 80px;
+}
+
+/* Editorial Gallery (Section /2) */
+.project-gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 32px;
+  margin-top: 60px;
+}
+
+.gallery-item {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f0f0f0;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.03);
+}
+
+.gallery-item--square {
+  aspect-ratio: 1/1;
+}
+
+.gallery-item--wide {
+  grid-column: 1 / -1;
+  aspect-ratio: 16/9;
+  margin-top: 16px;
+}
+
+/* Metrics Grid (Section /3) */
+.metrics-intro-heading {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.5vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #000;
+  margin-bottom: 48px;
+}
+
+.project-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.metric-card-val {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 5vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #000;
+  line-height: 1;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.metric-card-lbl {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Next Project Teaser Marquee (Mobius 1:1) */
+.next-project-section {
+  position: relative;
+  padding: 120px 0;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--border);
+}
+
+.next-proj-track {
+  width: 100%;
+  display: flex;
+  white-space: nowrap;
+}
+
+.next-proj-content {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6.5vw, 96px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-transform: capitalize;
+  color: #000;
+  animation: marquee-left 28s linear infinite;
+}
+
+.next-proj-track--rev .next-proj-content {
+  animation: marquee-right 28s linear infinite;
+  color: rgba(0, 0, 0, 0.08);
+}
+
+.next-proj-center-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  aspect-ratio: 4/3;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  z-index: 20;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  text-decoration: none;
+}
+
+.next-proj-center-card:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.38);
+}
+
+.next-proj-center-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.next-proj-badge {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .project-hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-hero-left {
+    min-height: 480px;
+  }
+  .project-hero-right {
+    padding: 60px 40px;
+  }
+  .project-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .project-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  .next-proj-center-card {
+    width: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-hero-right {
+    padding: 40px 20px;
+  }
+  .project-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}

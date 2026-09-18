@@ -10,5 +10,11 @@ services:
         value: public, max-age=3600
     routes:
       - type: rewrite
+        source: /work/soma-studio
+        destination: /soma-studio.html
+      - type: rewrite
+        source: /work
+        destination: /work.html
+      - type: rewrite
         source: /*
         destination: /index.html

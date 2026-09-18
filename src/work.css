@@ -1,0 +1,262 @@
+/* ——— Work / Blogs Archive Styles (1:1 Mobius /work) ——— */
+@import './style.css';
+
+/* Prevent page scrolling on desktop to allow 2D infinite canvas control */
+body.work-page {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg);
+  touch-action: none;
+}
+
+/* 2D Canvas Viewport */
+.canvas-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  z-index: 10;
+}
+
+.canvas-viewport.is-dragging {
+  cursor: grabbing;
+}
+
+/* Static Center Typography (Watermark) */
+.canvas-watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.canvas-watermark-title {
+  font-family: var(--font-display);
+  font-size: clamp(140px, 22vw, 320px);
+  font-weight: 800;
+  line-height: 0.78;
+  letter-spacing: -0.06em;
+  color: #000;
+  margin: 0;
+  user-select: none;
+}
+
+.canvas-watermark-sub {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #000;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.canvas-watermark-dot {
+  width: 10px;
+  height: 10px;
+  background: #000;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Movable 2D Plane */
+.canvas-plane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3800px;
+  height: 2800px;
+  will-change: transform;
+  z-index: 20;
+}
+
+/* Floating Project Cards */
+.canvas-card {
+  position: absolute;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, filter 0.3s ease;
+  display: block;
+}
+
+.canvas-card:hover {
+  transform: scale(1.04) translateY(-6px) !important;
+  box-shadow: 0 36px 80px rgba(0, 0, 0, 0.28);
+  z-index: 80 !important;
+}
+
+.canvas-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* Card Hover Info Overlay */
+.canvas-card-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 24px 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.canvas-card:hover .canvas-card-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.canvas-card-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.canvas-card-meta {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.02em;
+}
+
+/* Card Badge */
+.canvas-card-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+/* Year Badge on bottom left */
+.canvas-year-badge {
+  position: fixed;
+  bottom: 24px;
+  left: 40px;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.12);
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  z-index: 25;
+}
+
+/* Mobile Fallback Container (Hidden by default on Desktop) */
+.mobile-work-view {
+  display: none;
+}
+
+/* ——— Responsive: Under 810px Switch to Clean Vertical Feed ——— */
+@media (max-width: 810px) {
+  body.work-page {
+    overflow-y: auto !important;
+    height: auto !important;
+    touch-action: auto !important;
+  }
+
+  .canvas-viewport, .canvas-watermark, .canvas-year-badge {
+    display: none !important;
+  }
+
+  .mobile-work-view {
+    display: block;
+    padding-top: 120px;
+    padding-bottom: 80px;
+  }
+
+  .mobile-work-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 20px;
+  }
+
+  .mobile-work-title {
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+  }
+
+  .mobile-work-sub {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  .mobile-work-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 0 20px;
+  }
+
+  .mobile-card {
+    display: block;
+    text-decoration: none;
+    color: #000;
+  }
+
+  .mobile-card-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #eee;
+    margin-bottom: 12px;
+  }
+
+  .mobile-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mobile-card h3 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  .mobile-card p {
+    font-size: 14px;
+    color: var(--muted);
+  }
+}
