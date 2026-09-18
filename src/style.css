@@ -487,39 +487,48 @@ body {
 
 /* ——— 04. TICKERS & CENTERED VIDEO (Mobius 1:1) ——— */
 .ticker-section {
-  padding: 80px 0;
+  padding: 120px 0;
   background: #fff;
   overflow: hidden;
   position: relative;
   z-index: 30;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 32px;
+  justify-content: center;
+  gap: 20px;
 }
 .ticker-track {
   width: 100%;
   display: flex;
   white-space: nowrap;
 }
+.ticker-track--left {
+  position: relative;
+  z-index: 1;
+}
+.ticker-track--right {
+  position: relative;
+  z-index: 1;
+}
 .ticker-content {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 32px;
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.5vw, 48px);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-size: clamp(60px, 9vw, 130px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
   color: #000;
+  line-height: 0.9;
   animation: marquee-left 32s linear infinite;
 }
 .ticker-track--right .ticker-content {
   animation: marquee-right 32s linear infinite;
-  color: var(--muted-light);
+  color: rgba(0, 0, 0, 0.08);
 }
 .spacer {
-  font-size: 24px;
+  font-size: 0.6em;
   color: var(--border-dark);
 }
 @keyframes marquee-left {
@@ -531,13 +540,18 @@ body {
   100% { transform: translateX(0); }
 }
 
-/* Center Video Box (Mobius 1:1) */
+/* Center Video Box Directly On Top Of Bold Marquee Line (Mobius 1:1) */
 .ticker-video-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
   max-width: 880px;
   padding: 0 var(--gutter);
-  margin: 16px 0;
+  margin: 0;
   z-index: 10;
+  pointer-events: auto;
 }
 .ticker-video-box {
   position: relative;
@@ -546,7 +560,7 @@ body {
   border-radius: 16px;
   overflow: hidden;
   background: #111;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.18);
 }
 .ticker-video-box video {
   width: 100%;
@@ -678,8 +692,8 @@ body {
 }
 .numbers-mobius-layout {
   display: grid;
-  grid-template-columns: 38% 62%;
-  gap: 60px;
+  grid-template-columns: 32% 68%;
+  gap: 40px;
 }
 .numbers-left-stories {
   display: flex;
@@ -725,27 +739,28 @@ body {
   color: #000;
 }
 
-/* Right Sticky Giant Photo Number (User requested clamp(260px, 33vw, 500px)) */
+/* Right Sticky Giant Photo Number (Mobius 1:1 Fill) */
 .numbers-right-sticky {
   position: sticky;
-  top: 100px;
+  top: 80px;
   align-self: start;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 70vh;
+  min-height: 80vh;
 }
 .giant-photo-num-wrap {
   position: relative;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 .num-dot-accent {
   position: absolute;
-  left: 6%;
-  top: 48%;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 14px;
   height: 14px;
   background: #000;
@@ -754,9 +769,9 @@ body {
 }
 .giant-image-masked-number {
   font-family: var(--font-display);
-  font-size: clamp(260px, 33vw, 500px);
+  font-size: clamp(320px, 42vw, 650px);
   font-weight: 800;
-  line-height: 0.8;
+  line-height: 0.72;
   letter-spacing: -0.06em;
   background-image: url("https://framerusercontent.com/images/gk68gxIIuKf4YZpReHW8qPEWUf4.jpg");
   background-size: cover;

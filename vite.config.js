@@ -10,7 +10,8 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         work: resolve(__dirname, 'work.html'),
-        somaStudio: resolve(__dirname, 'soma-studio.html')
+        somaStudio: resolve(__dirname, 'soma-studio.html'),
+        wavehouse: resolve(__dirname, 'wavehouse.html')
       }
     }
   }

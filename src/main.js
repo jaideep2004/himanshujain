@@ -208,18 +208,17 @@ function updateGiantMaskedNumber(step) {
   if (maskedNumVal.textContent === numberValues[step]) return
   
   gsap.to(maskedNumVal, {
-    opacity: 0.1,
-    scale: 0.92,
-    duration: 0.2,
+    opacity: 0,
+    y: -40,
+    filter: 'blur(10px)',
+    duration: 0.3,
     ease: 'power2.in',
     onComplete: () => {
       maskedNumVal.textContent = numberValues[step]
-      gsap.to(maskedNumVal, {
-        opacity: 1,
-        scale: 1,
-        duration: 0.4,
-        ease: 'power3.out'
-      })
+      gsap.fromTo(maskedNumVal,
+        { opacity: 0, y: 40, filter: 'blur(10px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.45, ease: 'power3.out' }
+      )
     }
   })
 }
@@ -254,7 +253,7 @@ document.querySelectorAll('.process-step-item').forEach((card, idx) => {
   })
 })
 
-// ——— 10. CLIENT REFLECTIONS (Mobius 1:1 Interactive Slider) ———
+// ——— 10. CLIENT REFLECTIONS (Mobius 1:1 Interactive Auto-Slider) ———
 const testimonialsData = [
   {
     idx: '/1',
@@ -266,9 +265,9 @@ const testimonialsData = [
   {
     idx: '/2',
     img: 'https://framerusercontent.com/images/JUqCPovcIKHCGuuLShMUORkvJI.jpg?width=600&height=750',
-    quote: '“They delivered a level of clarity we’d been missing for years. Himanshu Jain® took our scattered ad accounts and shaped them into a cohesive acquisition engine that finally scales with positive unit economics.”',
+    quote: '“They delivered a level of clarity we’d been missing for years. Himanshu Jain® took our scattered thoughts and shaped them into a cohesive identity that finally feels right.”',
     name: 'Jonas Berg',
-    role: 'Founder & CEO, Arcton Labs'
+    role: 'Arcton Labs'
   },
   {
     idx: '/3',
@@ -295,8 +294,8 @@ function renderTestimonial(index) {
   // Transition out
   gsap.to([refImg, refIdx, refQuote, refName, refRole], {
     opacity: 0,
-    y: 10,
-    duration: 0.22,
+    y: 12,
+    duration: 0.25,
     ease: 'power2.in',
     onComplete: () => {
       // Update DOM
@@ -310,22 +309,47 @@ function renderTestimonial(index) {
       gsap.to([refImg, refIdx, refQuote, refName, refRole], {
         opacity: 1,
         y: 0,
-        duration: 0.38,
+        duration: 0.45,
         ease: 'power3.out'
       })
     }
   })
 }
 
+// Auto slide progression every 5.5s with hover pause
+let autoSlideInterval = null
+function startAutoSlide() {
+  stopAutoSlide()
+  autoSlideInterval = setInterval(() => {
+    currentSlide = (currentSlide + 1) % testimonialsData.length
+    renderTestimonial(currentSlide)
+  }, 5500)
+}
+function stopAutoSlide() {
+  if (autoSlideInterval) {
+    clearInterval(autoSlideInterval)
+    autoSlideInterval = null
+  }
+}
+startAutoSlide()
+
+const reflectionsSec = document.getElementById('reflections')
+if (reflectionsSec) {
+  reflectionsSec.addEventListener('mouseenter', stopAutoSlide)
+  reflectionsSec.addEventListener('mouseleave', startAutoSlide)
+}
+
 if (prevBtn && nextBtn) {
   prevBtn.addEventListener('click', () => {
     currentSlide = (currentSlide - 1 + testimonialsData.length) % testimonialsData.length
     renderTestimonial(currentSlide)
+    startAutoSlide()
   })
 
   nextBtn.addEventListener('click', () => {
     currentSlide = (currentSlide + 1) % testimonialsData.length
     renderTestimonial(currentSlide)
+    startAutoSlide()
   })
 }
 

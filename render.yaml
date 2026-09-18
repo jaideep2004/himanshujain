@@ -10,6 +10,9 @@ services:
         value: public, max-age=3600
     routes:
       - type: rewrite
+        source: /work/wavehouse
+        destination: /wavehouse.html
+      - type: rewrite
         source: /work/soma-studio
         destination: /soma-studio.html
       - type: rewrite
