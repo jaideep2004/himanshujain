@@ -51,11 +51,19 @@ const card3 = document.querySelector('.fan-card--3')
 const card4 = document.querySelector('.fan-card--4')
 const heroDot = document.querySelector('.hero-dot-accent')
 const heroIntro = document.querySelector('.hero-intro')
+const heroHook = document.querySelector('.hero-hook-title')
+const heroDesc = document.querySelector('.hero-desc')
+const heroLocs = document.querySelector('.hero-locations-row')
+const heroCta = document.querySelector('.hero-cta-btn')
 
 // Initial states before animation
-gsap.set(heroTitle, { scale: 1.35, opacity: 0.001, transformOrigin: 'left 60%' })
-gsap.set(heroYear, { y: 16, opacity: 0 })
+if (heroTitle) gsap.set(heroTitle, { scale: 1.35, opacity: 0.001, transformOrigin: 'left 60%' })
+if (heroYear) gsap.set(heroYear, { y: 16, opacity: 0 })
 if (heroIntro) gsap.set(heroIntro, { opacity: 0, y: 20 })
+if (heroHook) gsap.set(heroHook, { opacity: 0, y: 30 })
+if (heroDesc) gsap.set(heroDesc, { opacity: 0, y: 20 })
+if (heroLocs) gsap.set(heroLocs, { opacity: 0, y: 15 })
+if (heroCta) gsap.set(heroCta, { opacity: 0, y: 15 })
 if (heroDot) gsap.set(heroDot, { scale: 0, opacity: 0 })
 
 // Cards start down below and grouped upright
@@ -68,18 +76,23 @@ cards.forEach(c => {
 const heroTl = gsap.timeline({ defaults: { ease: 'expo.out' } })
 
 heroTl
-  // 1. Giant Title breathe-in
+  // 1. Giant Title breathe-in (if present)
   .to(heroTitle, { scale: 1, opacity: 1, duration: 0.85, ease: 'expo.out', delay: 0.15 }, 0)
   // 2. Year rise
   .to(heroYear, { y: 0, opacity: 0.92, duration: 0.55, ease: 'expo.out' }, 0.35)
-  // 3. Intro text fade in
+  // 3. Left Column elements entrance
+  .to(heroHook, { opacity: 1, y: 0, duration: 0.85, ease: 'expo.out' }, 0.1)
+  .to(heroDesc, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.25)
+  .to(heroLocs, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.35)
+  .to(heroCta, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.45)
+  // 4. Intro text fade in (legacy fallback if used)
   .to(heroIntro, { opacity: 1, y: 0, duration: 0.65, ease: 'power2.out' }, 0.3)
-  // 4. Cards rise one by one smoothly and fan into position
+  // 5. Cards rise one by one smoothly and fan into position
   .to(card1, { y: 12, x: -28, rotation: -16, opacity: 1, duration: 1.1, ease: 'power4.out' }, 0.2)
   .to(card2, { y: 16, x: 24, rotation: 6, opacity: 1, duration: 1.1, ease: 'power4.out' }, 0.32)
   .to(card3, { y: -6, x: -14, rotation: -8, opacity: 1, duration: 1.1, ease: 'power4.out' }, 0.44)
   .to(card4, { y: 0, x: 0, rotation: 0, opacity: 1, duration: 1.1, ease: 'power4.out' }, 0.56)
-  // 5. Dot accent pops in
+  // 6. Dot accent pops in
   .to(heroDot, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }, 0.75)
 
 // ——— 02. MANIFESTO A: PINNED SCATTERED STRAIGHT WORDS GLIDING ON SCROLL ———
@@ -352,32 +365,6 @@ if (prevBtn && nextBtn) {
     startAutoSlide()
   })
 }
-
-// ——— 11. PRICING TOGGLE (Monthly vs Yearly -20%) ———
-const toggleBtns = document.querySelectorAll('.pricing-toggle .toggle-btn')
-const pricingCards = document.querySelectorAll('[data-pricing-card]')
-
-toggleBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    toggleBtns.forEach(b => b.classList.remove('active'))
-    btn.classList.add('active')
-    const plan = btn.getAttribute('data-plan')
-
-    if (pricingCards.length >= 2) {
-      if (plan === 'monthly') {
-        pricingCards[0].querySelector('.price-val strong').textContent = '$6,500'
-        pricingCards[0].querySelector('.price-strike').style.display = 'none'
-        pricingCards[1].querySelector('.price-val strong').textContent = '$12,000'
-        pricingCards[1].querySelector('.price-strike').style.display = 'none'
-      } else {
-        pricingCards[0].querySelector('.price-val strong').textContent = '$5,200'
-        pricingCards[0].querySelector('.price-strike').style.display = 'inline'
-        pricingCards[1].querySelector('.price-val strong').textContent = '$9,800'
-        pricingCards[1].querySelector('.price-strike').style.display = 'inline'
-      }
-    }
-  })
-})
 
 // Refresh triggers after fonts and layout settle
 window.addEventListener('load', () => ScrollTrigger.refresh())
