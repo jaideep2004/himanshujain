@@ -3,6 +3,14 @@
 	font-family: "Inter Display";
 	src: url("https://framerusercontent.com/assets/9Nu9BRcGkRrLnJCGqVdSUXJt2Ig.woff2")
 		format("woff2");
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Inter Display";
+	src: url("https://framerusercontent.com/assets/9Nu9BRcGkRrLnJCGqVdSUXJt2Ig.woff2")
+		format("woff2");
 	font-weight: 800;
 	font-style: normal;
 	font-display: swap;
@@ -923,8 +931,9 @@ body {
 }
 .numbers-mobius-layout {
 	display: grid;
-	grid-template-columns: 32% 68%;
-	gap: 40px;
+	grid-template-columns: 360px 1fr;
+	gap: 50px;
+	align-items: start;
 }
 .numbers-left-stories {
 	display: flex;
@@ -1007,29 +1016,29 @@ body {
 }
 .giant-photo-num-wrap {
 	position: relative;
-	width: 100%;
-	display: flex;
-	justify-content: center;
+	display: inline-flex;
 	align-items: center;
+	justify-content: center;
+}
+.num-dot-accent {
+	width: 14px;
+	height: 14px;
+	background: #000;
+	border-radius: 50%;
+	margin-right: 18px;
+	flex-shrink: 0;
 }
 .giant-image-masked-number {
 	font-family: var(--font-display);
-	font-size: clamp(220px, 28vw, 480px);
+	font-size: clamp(260px, 29vw, 440px);
 	font-weight: 900;
 	line-height: 1;
-	letter-spacing: -0.05em;
-	background-image: url("https://framerusercontent.com/images/gk68gxIIuKf4YZpReHW8qPEWUf4.jpg");
-	background-size: cover;
-	background-position: center;
-	-webkit-background-clip: text;
-	background-clip: text;
-	-webkit-text-fill-color: transparent;
-	color: transparent;
+	letter-spacing: -0.02em;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	height: 1.05em;
-	overflow: hidden;
+	overflow: visible;
 	user-select: none;
 }
 
@@ -1040,22 +1049,21 @@ body {
 	height: 1.05em;
 	overflow: hidden;
 	position: relative;
-	width: 0.6em;
 	text-align: center;
 	transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
 	vertical-align: middle;
 }
 .reel-col--hundreds {
-	width: 0.58em;
+	width: 0.36em;
 }
 .reel-col--tens {
-	width: 0.6em;
+	width: 0.36em;
 }
 .reel-col--units {
-	width: 0.6em;
+	width: 0.72em;
 }
 .reel-col--suffix {
-	width: 0.48em;
+	width: 0.58em;
 }
 
 .reel-col.is-hidden {
@@ -1083,6 +1091,7 @@ body {
 	background-image: url("https://framerusercontent.com/images/gk68gxIIuKf4YZpReHW8qPEWUf4.jpg");
 	background-size: cover;
 	background-position: center;
+	background-attachment: fixed;
 	-webkit-background-clip: text;
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
