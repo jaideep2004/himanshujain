@@ -333,20 +333,139 @@ document.querySelectorAll('[data-service]').forEach((srv) => {
   })
 })
 
-// ——— 06. IN NUMBERS: ROLLING NUMERICAL COUNTER & ACTIVE STORY HIGHLIGHT (Mobius 1:1) ———
+// ——— 06. IN NUMBERS: 1:1 MOBIUS VERTICAL ODOMETER REEL COUNTER ———
 const storyBlocks = document.querySelectorAll('.num-story-block')
-const maskedNumVal = document.getElementById('masked-num-val')
+const reelHundreds = document.getElementById('reel-hundreds')
+const reelTens = document.getElementById('reel-tens')
+const reelUnits = document.getElementById('reel-units')
+const reelSuffix = document.getElementById('reel-suffix')
+const odometerReel = document.getElementById('odometer-reel')
 
-const numTargets = {
-  1: { val: 4, suffix: '' },
-  2: { val: 110, suffix: '+' },
-  3: { val: 9, suffix: '+' }
+const reelSteps = {
+  1: {
+    // 4
+    hundreds: { show: false, yPercent: 0 },
+    tens: { show: false, yPercent: 0 },
+    units: { show: true, yPercent: -(4 / 10) * 100 }, // '4' is at index 4 of 10
+    suffix: { show: false, yPercent: 0 }
+  },
+  2: {
+    // 110+
+    hundreds: { show: true, yPercent: -50 }, // '1' is at index 1 of 2
+    tens: { show: true, yPercent: -(2 / 11) * 100 }, // '1' is at index 2 of 11 (0=empty, 1='0', 2='1')
+    units: { show: true, yPercent: 0 }, // '0' is at index 0 of 10
+    suffix: { show: true, yPercent: -50 } // '+' is at index 1 of 2
+  },
+  3: {
+    // 9+
+    hundreds: { show: false, yPercent: 0 },
+    tens: { show: false, yPercent: 0 },
+    units: { show: true, yPercent: -(9 / 10) * 100 }, // '9' is at index 9 of 10
+    suffix: { show: true, yPercent: -50 }
+  }
 }
 
 let activeNumStep = 1
-const counterState = { val: 4 }
 
-// Set initial active state
+function applyReelStep(step, immediate = false) {
+  const config = reelSteps[step]
+  if (!config) return
+
+  const duration = immediate ? 0 : 1.15
+  const ease = 'power3.inOut'
+
+  // Subtle breathing bounce on container
+  if (!immediate && odometerReel) {
+    gsap.fromTo(odometerReel,
+      { scale: 0.97 },
+      { scale: 1, duration: 0.8, ease: 'power2.out' }
+    )
+  }
+
+  // Hundreds Column
+  if (reelHundreds) {
+    const strip = reelHundreds.querySelector('.reel-strip')
+    if (config.hundreds.show) {
+      reelHundreds.classList.remove('is-hidden')
+      gsap.to(strip, {
+        yPercent: config.hundreds.yPercent,
+        duration,
+        ease,
+        overwrite: 'auto'
+      })
+    } else {
+      reelHundreds.classList.add('is-hidden')
+      gsap.to(strip, {
+        yPercent: 0,
+        duration: duration * 0.6,
+        ease,
+        overwrite: 'auto'
+      })
+    }
+  }
+
+  // Tens Column
+  if (reelTens) {
+    const strip = reelTens.querySelector('.reel-strip')
+    if (config.tens.show) {
+      reelTens.classList.remove('is-hidden')
+      gsap.to(strip, {
+        yPercent: config.tens.yPercent,
+        duration: duration * 1.05,
+        delay: immediate ? 0 : 0.04,
+        ease,
+        overwrite: 'auto'
+      })
+    } else {
+      reelTens.classList.add('is-hidden')
+      gsap.to(strip, {
+        yPercent: 0,
+        duration: duration * 0.6,
+        ease,
+        overwrite: 'auto'
+      })
+    }
+  }
+
+  // Units Column
+  if (reelUnits) {
+    const strip = reelUnits.querySelector('.reel-strip')
+    gsap.to(strip, {
+      yPercent: config.units.yPercent,
+      duration: duration * 1.1,
+      delay: immediate ? 0 : 0.08,
+      ease,
+      overwrite: 'auto'
+    })
+  }
+
+  // Suffix (+) Column
+  if (reelSuffix) {
+    const strip = reelSuffix.querySelector('.reel-strip')
+    if (config.suffix.show) {
+      reelSuffix.classList.remove('is-hidden')
+      gsap.to(strip, {
+        yPercent: config.suffix.yPercent,
+        duration: duration * 0.85,
+        delay: immediate ? 0 : 0.12,
+        ease,
+        overwrite: 'auto'
+      })
+    } else {
+      reelSuffix.classList.add('is-hidden')
+      gsap.to(strip, {
+        yPercent: 0,
+        duration: duration * 0.6,
+        ease,
+        overwrite: 'auto'
+      })
+    }
+  }
+}
+
+// Initialize with Step 1 ('4') immediately
+applyReelStep(1, true)
+
 if (storyBlocks.length > 0) {
   storyBlocks[0].classList.add('active-story')
 }
@@ -355,8 +474,8 @@ storyBlocks.forEach((block) => {
   const step = parseInt(block.getAttribute('data-num-step'))
   ScrollTrigger.create({
     trigger: block,
-    start: 'top 65%',
-    end: 'bottom 35%',
+    start: 'top 60%',
+    end: 'bottom 40%',
     onEnter: () => setNumbersStep(step),
     onEnterBack: () => setNumbersStep(step)
   })
@@ -365,11 +484,8 @@ storyBlocks.forEach((block) => {
 function setNumbersStep(step) {
   if (activeNumStep === step) return
   activeNumStep = step
-  
-  const target = numTargets[step]
-  if (!target || !maskedNumVal) return
 
-  // Update active story dimming/highlighting with smooth easing
+  // Update story active highlighting
   storyBlocks.forEach((b) => {
     const s = parseInt(b.getAttribute('data-num-step'))
     if (s === step) {
@@ -379,28 +495,7 @@ function setNumbersStep(step) {
     }
   })
 
-  // Kill previous counter tween
-  gsap.killTweensOf(counterState)
-
-  // Subtle breathing bounce on number change
-  gsap.fromTo(maskedNumVal,
-    { scale: 0.96, filter: 'blur(2px)' },
-    { scale: 1, filter: 'blur(0px)', duration: 0.9, ease: 'power2.out' }
-  )
-
-  // Slow & ultra-smooth numerical counting animation (Requested by user: 1.8s duration)
-  gsap.to(counterState, {
-    val: target.val,
-    duration: 1.8,
-    ease: 'power2.out',
-    onUpdate: () => {
-      const currentInt = Math.round(counterState.val)
-      maskedNumVal.textContent = currentInt + (currentInt === target.val ? target.suffix : '')
-    },
-    onComplete: () => {
-      maskedNumVal.textContent = target.val + target.suffix
-    }
-  })
+  applyReelStep(step, false)
 }
 
 // ——— 07. FRAMEWORK ROWS STAGGER (Mobius Awards Layout) ———

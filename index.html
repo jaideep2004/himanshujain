@@ -164,7 +164,7 @@
               </div>
             </div>
 
-            <!-- Row 2: 5 items -->
+            <!-- Row 2: 4 items (Mobius 1:1) -->
             <div class="p-row p-row--2">
               <div class="p-logo-cell">
                 <img src="https://framerusercontent.com/images/av9jNJI3hHXZ6T1DdxDCPoRrdbY.svg?width=40&height=40" alt="E-mark" class="p-svg p-svg--sq">
@@ -174,9 +174,6 @@
               </div>
               <div class="p-logo-cell">
                 <img src="https://framerusercontent.com/images/RgToa1Q7FVIjrJV0tHApD9hInTU.svg?width=43&height=40" alt="G-mark" class="p-svg p-svg--sq">
-              </div>
-              <div class="p-logo-cell p-logo-cell--dot">
-                <span class="partners-black-dot"></span>
               </div>
               <div class="p-logo-cell">
                 <img src="https://framerusercontent.com/images/RsaJCL4Sj4fVM9spQ7bKyrgyngo.svg?width=169&height=40" alt="IPSUM" class="p-svg">
@@ -381,11 +378,56 @@
           </div>
         </div>
 
-        <!-- Right Side: Sticky Giant Photo Number (NO BOX, 1:1 Mobius: clamp(340px, 44vw, 680px)) -->
+        <!-- Right Side: Sticky Giant Photo Number (1:1 Mobius Odometer Reel) -->
         <div class="numbers-right-sticky">
           <div class="giant-photo-num-wrap">
-            <div class="num-dot-accent" aria-hidden="true"></div>
-            <div class="giant-image-masked-number" id="masked-num-val">4</div>
+            <div class="giant-image-masked-number" id="odometer-reel">
+              <!-- Column 1: Hundreds Reel (1) -->
+              <div class="reel-col reel-col--hundreds" id="reel-hundreds">
+                <div class="reel-strip">
+                  <span class="reel-char">&nbsp;</span>
+                  <span class="reel-char">1</span>
+                </div>
+              </div>
+              <!-- Column 2: Tens Reel (1) -->
+              <div class="reel-col reel-col--tens" id="reel-tens">
+                <div class="reel-strip">
+                  <span class="reel-char">&nbsp;</span>
+                  <span class="reel-char">0</span>
+                  <span class="reel-char">1</span>
+                  <span class="reel-char">2</span>
+                  <span class="reel-char">3</span>
+                  <span class="reel-char">4</span>
+                  <span class="reel-char">5</span>
+                  <span class="reel-char">6</span>
+                  <span class="reel-char">7</span>
+                  <span class="reel-char">8</span>
+                  <span class="reel-char">9</span>
+                </div>
+              </div>
+              <!-- Column 3: Units Reel (0-9) -->
+              <div class="reel-col reel-col--units" id="reel-units">
+                <div class="reel-strip">
+                  <span class="reel-char">0</span>
+                  <span class="reel-char">1</span>
+                  <span class="reel-char">2</span>
+                  <span class="reel-char">3</span>
+                  <span class="reel-char">4</span>
+                  <span class="reel-char">5</span>
+                  <span class="reel-char">6</span>
+                  <span class="reel-char">7</span>
+                  <span class="reel-char">8</span>
+                  <span class="reel-char">9</span>
+                </div>
+              </div>
+              <!-- Column 4: Suffix Reel (+) -->
+              <div class="reel-col reel-col--suffix" id="reel-suffix">
+                <div class="reel-strip">
+                  <span class="reel-char">&nbsp;</span>
+                  <span class="reel-char">+</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

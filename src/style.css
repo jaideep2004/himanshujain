@@ -607,35 +607,28 @@ body {
 	align-items: center;
 	width: 100%;
 }
-.p-row--1 {
-	grid-template-columns: repeat(4, 1fr);
-	margin-bottom: 64px;
-}
+.p-row--1,
 .p-row--2 {
-	grid-template-columns: repeat(5, 1fr);
-	margin-bottom: 64px;
+	grid-template-columns: repeat(4, 1fr);
+	margin-bottom: 70px;
 }
 .p-row--3 {
-	grid-template-columns: 1.25fr 1fr 1fr 1fr;
+	grid-template-columns: repeat(4, 1fr);
 }
 
 .p-logo-cell {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-height: 48px;
+	min-height: 64px;
+	position: relative;
 }
 .p-logo-cell--text {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	justify-content: flex-start;
-	gap: 14px;
-}
-.p-logo-cell--dot {
-	display: flex;
-	align-items: center;
 	justify-content: center;
+	gap: 14px;
 }
 
 .partners-subtext {
@@ -648,43 +641,40 @@ body {
 }
 
 .p-svg {
-	max-height: 40px;
-	max-width: 155px;
+	max-height: 42px;
+	max-width: 160px;
 	width: auto;
 	object-fit: contain;
 	filter: grayscale(1);
-	opacity: 0.82;
-	transition: filter 0.35s ease, opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+	opacity: 0.85;
+	transition: filter 0.35s ease, opacity 0.35s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 	display: block;
+	cursor: pointer;
+	transform-origin: center center;
 }
 .p-svg--wide {
-	max-height: 34px;
-	max-width: 180px;
+	max-height: 36px;
+	max-width: 185px;
 }
 .p-svg--sq {
-	max-height: 38px;
+	max-height: 42px;
 }
 .p-svg--liju {
 	max-height: 36px;
 	max-width: 135px;
 }
-.p-svg:hover {
-	filter: grayscale(0);
-	opacity: 1;
-	transform: scale(1.06);
-}
 
-.partners-black-dot {
-	width: 12px;
-	height: 12px;
-	background: #000;
-	border-radius: 50%;
-	display: inline-block;
-	transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-	cursor: default;
+/* Mobius 1:1 Hover Interaction: hovered scales up 1.42x, loses grayscale, siblings dim */
+.partners-rows-wrap:hover .p-svg:not(:hover) {
+	opacity: 0.35;
+	filter: grayscale(1);
+	transform: scale(0.96);
 }
-.partners-black-dot:hover {
-	transform: scale(1.3);
+.p-svg:hover {
+	filter: grayscale(0) !important;
+	opacity: 1 !important;
+	transform: scale(1.42) !important;
+	z-index: 20;
 }
 
 /* Curtain Photo Container that overlaps pinned logos */
@@ -1022,23 +1012,12 @@ body {
 	justify-content: center;
 	align-items: center;
 }
-.num-dot-accent {
-	position: absolute;
-	left: -20px;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 14px;
-	height: 14px;
-	background: #000;
-	border-radius: 50%;
-	z-index: 10;
-}
 .giant-image-masked-number {
 	font-family: var(--font-display);
-	font-size: clamp(320px, 41vw, 650px);
-	font-weight: 800;
+	font-size: clamp(220px, 28vw, 480px);
+	font-weight: 900;
 	line-height: 1;
-	letter-spacing: -0.06em;
+	letter-spacing: -0.05em;
 	background-image: url("https://framerusercontent.com/images/gk68gxIIuKf4YZpReHW8qPEWUf4.jpg");
 	background-size: cover;
 	background-position: center;
@@ -1046,10 +1025,68 @@ body {
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
 	color: transparent;
-	transition:
-		opacity 0.25s ease,
-		transform 0.25s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 1.05em;
+	overflow: hidden;
 	user-select: none;
+}
+
+/* Odometer Vertical Reel Columns (Mobius 1:1) */
+.reel-col {
+	display: inline-flex;
+	flex-direction: column;
+	height: 1.05em;
+	overflow: hidden;
+	position: relative;
+	width: 0.6em;
+	text-align: center;
+	transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+	vertical-align: middle;
+}
+.reel-col--hundreds {
+	width: 0.58em;
+}
+.reel-col--tens {
+	width: 0.6em;
+}
+.reel-col--units {
+	width: 0.6em;
+}
+.reel-col--suffix {
+	width: 0.48em;
+}
+
+.reel-col.is-hidden {
+	width: 0 !important;
+	opacity: 0 !important;
+	margin: 0 !important;
+	pointer-events: none;
+}
+
+.reel-strip {
+	display: flex;
+	flex-direction: column;
+	will-change: transform;
+}
+
+.reel-char {
+	height: 1.05em;
+	line-height: 1.05em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-family: inherit;
+	font-weight: inherit;
+	background-image: url("https://framerusercontent.com/images/gk68gxIIuKf4YZpReHW8qPEWUf4.jpg");
+	background-size: cover;
+	background-position: center;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
 }
 
 /* ——— 07. GROWTH FRAMEWORK (1:1 Mobius "Our Awards" Structure) ——— */
