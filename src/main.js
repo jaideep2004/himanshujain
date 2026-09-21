@@ -17,6 +17,9 @@ const lenis = new Lenis({
 lenis.on('scroll', ScrollTrigger.update)
 gsap.ticker.add((time) => lenis.raf(time * 1000))
 gsap.ticker.lagSmoothing(0)
+window.lenis = lenis
+window.ScrollTrigger = ScrollTrigger
+window.gsap = gsap
 
 // ——— LIVE TIMEZONE CLOCK (Fixed Widget) ———
 function updateClock() {
@@ -95,6 +98,21 @@ heroTl
   // 6. Dot accent pops in
   .to(heroDot, { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }, 0.75)
 
+// Hero bottom watermark subtle scroll glide
+if (heroTitle) {
+  gsap.to('.hero-bottom-bar', {
+    y: -30,
+    opacity: 0.88,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true
+    }
+  })
+}
+
 // ——— 02. MANIFESTO A: PINNED SCATTERED STRAIGHT WORDS GLIDING ON SCROLL ———
 const scatterWords = document.querySelectorAll('.scatter-word')
 const manifestoDot = document.getElementById('manifesto-dot')
@@ -165,6 +183,126 @@ document.querySelectorAll('[data-reveal]').forEach(el => {
   })
 })
 
+// ——— 03B. PARTNERS SECTION: PINNED LOGOS & CURTAIN OVERLAP (Mobius 1:1) ———
+const partnersPinSec = document.querySelector('.partners-pin-section')
+const partnersStage = document.querySelector('.partners-pinned-stage')
+const partnersCurtain = document.querySelector('.partners-curtain-photo-wrap')
+const partnersWatermark = document.querySelector('.partners-watermark-title')
+const partnersLogos = document.querySelectorAll('.p-svg')
+const partnersDot = document.querySelector('.partners-black-dot')
+
+if (partnersPinSec && partnersStage && partnersCurtain) {
+  // Stagger reveal of logos on entry (Mobius 1:1)
+  if (partnersLogos.length > 0) {
+    gsap.fromTo(partnersLogos,
+      { opacity: 0, y: 22 },
+      {
+        opacity: 0.82,
+        y: 0,
+        stagger: 0.04,
+        duration: 0.85,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: partnersPinSec,
+          start: 'top 75%',
+          toggleActions: 'play none none none'
+        }
+      }
+    )
+  }
+
+  if (partnersDot) {
+    gsap.fromTo(partnersDot,
+      { scale: 0 },
+      {
+        scale: 1,
+        duration: 0.5,
+        delay: 0.35,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: partnersPinSec,
+          start: 'top 75%',
+          toggleActions: 'play none none none'
+        }
+      }
+    )
+  }
+
+  if (partnersWatermark) {
+    gsap.fromTo(partnersWatermark,
+      { opacity: 0, scale: 1.05 },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 1.2,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: partnersPinSec,
+          start: 'top 75%',
+          toggleActions: 'play none none none'
+        }
+      }
+    )
+  }
+
+  // Pin the logos stage so it stays locked in viewport while curtain rises
+  ScrollTrigger.create({
+    trigger: partnersPinSec,
+    start: 'top top',
+    end: () => `+=${partnersStage.offsetHeight + 240}`,
+    pin: partnersStage,
+    pinSpacing: false,
+    anticipatePin: 1
+  })
+
+  // Curtain photo slides up over the logos with high-end ease
+  gsap.fromTo(partnersCurtain,
+    { y: 70 },
+    {
+      y: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: partnersCurtain,
+        start: 'top 92%',
+        end: 'top 20%',
+        scrub: 0.8
+      }
+    }
+  )
+
+  // Curtain photo inner image parallax
+  const curtainImg = partnersCurtain.querySelector('img')
+  if (curtainImg) {
+    gsap.fromTo(curtainImg,
+      { y: -30, scale: 1.04 },
+      {
+        y: 30,
+        scale: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: partnersCurtain,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      }
+    )
+  }
+
+  // Fade and slight scale down of logos and watermark as curtain covers them
+  gsap.to(['.partners-rows-wrap', partnersWatermark], {
+    opacity: 0.1,
+    scale: 0.96,
+    ease: 'power2.in',
+    scrollTrigger: {
+      trigger: partnersCurtain,
+      start: 'top 75%',
+      end: 'top 20%',
+      scrub: 0.8
+    }
+  })
+}
+
 // ——— 04. TICKER SCROLL VELOCITY ACCELERATION ———
 const tickerLeft = document.getElementById('ticker-left')
 const tickerRight = document.getElementById('ticker-right')
@@ -195,43 +333,72 @@ document.querySelectorAll('[data-service]').forEach((srv) => {
   })
 })
 
-// ——— 06. IN NUMBERS: GIANT PHOTO NUMBER SWITCHER (clamp(260px, 33vw, 500px)) ———
+// ——— 06. IN NUMBERS: ROLLING NUMERICAL COUNTER & ACTIVE STORY HIGHLIGHT (Mobius 1:1) ———
 const storyBlocks = document.querySelectorAll('.num-story-block')
 const maskedNumVal = document.getElementById('masked-num-val')
 
-const numberValues = {
-  '1': '4',
-  '2': '110',
-  '3': '9+'
+const numTargets = {
+  1: { val: 4, suffix: '' },
+  2: { val: 110, suffix: '+' },
+  3: { val: 9, suffix: '+' }
+}
+
+let activeNumStep = 1
+const counterState = { val: 4 }
+
+// Set initial active state
+if (storyBlocks.length > 0) {
+  storyBlocks[0].classList.add('active-story')
 }
 
 storyBlocks.forEach((block) => {
-  const step = block.getAttribute('data-num-step')
+  const step = parseInt(block.getAttribute('data-num-step'))
   ScrollTrigger.create({
     trigger: block,
-    start: 'top 55%',
-    end: 'bottom 45%',
-    onEnter: () => updateGiantMaskedNumber(step),
-    onEnterBack: () => updateGiantMaskedNumber(step)
+    start: 'top 65%',
+    end: 'bottom 35%',
+    onEnter: () => setNumbersStep(step),
+    onEnterBack: () => setNumbersStep(step)
   })
 })
 
-function updateGiantMaskedNumber(step) {
-  if (!numberValues[step] || !maskedNumVal) return
-  if (maskedNumVal.textContent === numberValues[step]) return
+function setNumbersStep(step) {
+  if (activeNumStep === step) return
+  activeNumStep = step
   
-  gsap.to(maskedNumVal, {
-    opacity: 0,
-    y: -40,
-    filter: 'blur(10px)',
-    duration: 0.3,
-    ease: 'power2.in',
+  const target = numTargets[step]
+  if (!target || !maskedNumVal) return
+
+  // Update active story dimming/highlighting with smooth easing
+  storyBlocks.forEach((b) => {
+    const s = parseInt(b.getAttribute('data-num-step'))
+    if (s === step) {
+      b.classList.add('active-story')
+    } else {
+      b.classList.remove('active-story')
+    }
+  })
+
+  // Kill previous counter tween
+  gsap.killTweensOf(counterState)
+
+  // Subtle breathing bounce on number change
+  gsap.fromTo(maskedNumVal,
+    { scale: 0.96, filter: 'blur(2px)' },
+    { scale: 1, filter: 'blur(0px)', duration: 0.9, ease: 'power2.out' }
+  )
+
+  // Slow & ultra-smooth numerical counting animation (Requested by user: 1.8s duration)
+  gsap.to(counterState, {
+    val: target.val,
+    duration: 1.8,
+    ease: 'power2.out',
+    onUpdate: () => {
+      const currentInt = Math.round(counterState.val)
+      maskedNumVal.textContent = currentInt + (currentInt === target.val ? target.suffix : '')
+    },
     onComplete: () => {
-      maskedNumVal.textContent = numberValues[step]
-      gsap.fromTo(maskedNumVal,
-        { opacity: 0, y: 40, filter: 'blur(10px)' },
-        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.45, ease: 'power3.out' }
-      )
+      maskedNumVal.textContent = target.val + target.suffix
     }
   })
 }
@@ -252,19 +419,171 @@ document.querySelectorAll('[data-framework-row]').forEach((row, idx) => {
   })
 })
 
-// ——— 08. PROCESS STEPS PARALLAX ———
-document.querySelectorAll('.process-step-item').forEach((card, idx) => {
-  gsap.to(card, {
-    y: (idx % 2 === 0 ? -16 : 16),
-    ease: 'none',
+// ——— 08. THE PROCESS: STAIRCASE TIMELINE & PILLAR CARDS (Mobius 1:1) ———
+const processSec = document.querySelector('.process-section')
+const processHeading = document.querySelector('.process-giant-heading')
+const processSub = document.querySelector('.process-sub')
+const timelineScale = document.querySelector('.timeline-scale')
+const stairSteps = document.querySelectorAll('.stair-step')
+const stairLabels = document.querySelectorAll('.stair-label')
+const processCards = document.querySelectorAll('.process-step-item')
+
+if (processSec) {
+  // 1. Heading and Subtitle entrance
+  gsap.from([processHeading, processSub], {
+    y: 36,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'expo.out',
     scrollTrigger: {
-      trigger: '.process-steps-grid',
-      start: 'top bottom',
-      end: 'bottom top',
-      scrub: 1
+      trigger: processSec,
+      start: 'top 75%'
     }
   })
-})
+
+  // 2. Timeline Scale markers fade in
+  if (timelineScale) {
+    gsap.from(timelineScale.children, {
+      opacity: 0,
+      y: 10,
+      duration: 0.5,
+      stagger: 0.08,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '.process-diagram-wrap',
+        start: 'top 80%'
+      }
+    })
+  }
+
+  // 3. Staircase steps expand out horizontally in cascading stagger
+  if (stairSteps.length > 0) {
+    const stairTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.timeline-staircase',
+        start: 'top 78%'
+      }
+    })
+
+    stairSteps.forEach((step, idx) => {
+      stairTl.fromTo(step,
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.7, ease: 'expo.out' },
+        idx * 0.15
+      )
+    })
+
+    // Labels slide in gently inside each step
+    stairLabels.forEach((label, idx) => {
+      stairTl.fromTo(label,
+        { x: -16, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
+        idx * 0.15 + 0.15
+      )
+    })
+  }
+
+  // 4. 4 Process Cards staggered upward cascade
+  if (processCards.length > 0) {
+    gsap.from(processCards, {
+      y: 40,
+      opacity: 0,
+      duration: 0.7,
+      stagger: 0.12,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.process-steps-grid',
+        start: 'top 80%'
+      }
+    })
+  }
+}
+
+// ——— 09. FEATURED CASE STUDY: MEN'S CLOTHING PARALLAX & LIVE METRIC COUNTERS ———
+const caseSection = document.querySelector('.featured-case-section')
+const casePhoto = document.querySelector('.case-card-photo')
+const caseImg = document.querySelector('.case-card-photo img')
+const caseTitle = document.querySelector('.case-client-name')
+const caseTags = document.querySelectorAll('.case-client-tags span')
+const caseBlocks = document.querySelectorAll('.case-block')
+const caseMetricVals = document.querySelectorAll('.case-m-val')
+
+if (caseSection) {
+  // Photo Reveal with smooth scale & parallax
+  if (casePhoto && caseImg) {
+    gsap.from(casePhoto, {
+      y: 40,
+      opacity: 0.7,
+      duration: 1.1,
+      ease: 'expo.out',
+      scrollTrigger: {
+        trigger: caseSection,
+        start: 'top 75%'
+      }
+    })
+
+    gsap.fromTo(caseImg,
+      { yPercent: -6, scale: 1.08 },
+      {
+        yPercent: 6,
+        scale: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: caseSection,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1
+        }
+      }
+    )
+  }
+
+  // Right Column Cascade
+  const rightColTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.case-details-col',
+      start: 'top 75%'
+    }
+  })
+
+  if (caseTitle) {
+    rightColTl.from(caseTitle, { y: 30, opacity: 0, duration: 0.7, ease: 'expo.out' })
+  }
+  if (caseTags.length > 0) {
+    rightColTl.from(caseTags, { opacity: 0, y: 10, stagger: 0.08, duration: 0.4, ease: 'power2.out' }, '-=0.4')
+  }
+  if (caseBlocks.length > 0) {
+    rightColTl.from(caseBlocks, { y: 25, opacity: 0, stagger: 0.15, duration: 0.6, ease: 'power2.out' }, '-=0.2')
+  }
+
+  // Live Counting Metric Values
+  if (caseMetricVals.length > 0) {
+    ScrollTrigger.create({
+      trigger: '.case-metrics-grid',
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        caseMetricVals.forEach((el, idx) => {
+          const target = parseFloat(el.getAttribute('data-target')) || 0
+          const obj = { val: 0 }
+          
+          gsap.from(el, { y: 20, opacity: 0, duration: 0.5, delay: idx * 0.1, ease: 'power2.out' })
+          
+          gsap.to(obj, {
+            val: target,
+            duration: 1.4,
+            delay: idx * 0.1,
+            ease: 'power3.out',
+            onUpdate: () => {
+              el.textContent = `+${Math.round(obj.val)}%`
+            }
+          })
+        })
+      }
+    })
+  }
+}
 
 // ——— 10. CLIENT REFLECTIONS (Mobius 1:1 Interactive Auto-Slider) ———
 const testimonialsData = [

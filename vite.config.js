@@ -11,7 +11,8 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         work: resolve(__dirname, 'work.html'),
         somaStudio: resolve(__dirname, 'soma-studio.html'),
-        wavehouse: resolve(__dirname, 'wavehouse.html')
+        wavehouse: resolve(__dirname, 'wavehouse.html'),
+        home2: resolve(__dirname, 'home2.html')
       }
     }
   }
