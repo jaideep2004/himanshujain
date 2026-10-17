@@ -589,63 +589,204 @@
       </div>
     </section>
 
-    <!-- ================= 09B. FEATURED CASE STUDY (Page 13 Layout) ================= -->
-    <section class="featured-case-section">
+    <!-- ================= 09B. REAL WORK. REAL RESULT — CASE STUDIES AUTO-SLIDER ================= -->
+    <section class="featured-case-section" id="case-studies">
       <div class="container">
-        <div class="case-study-split-grid">
-          <!-- Left Column: Yellow Jersey Visual (Mobius 1:1) -->
-          <div class="case-study-left-visual">
-            <div class="case-card-photo">
-              <img src="https://framerusercontent.com/images/TgD2gKSlOfhH9eJku8ilavEy2Vs.jpg?width=1800&height=2400" alt="Men's Clothing Case Study">
+        <!-- Section Header with Slider Navigation Controls -->
+        <div class="case-studies-header-row">
+          <div class="case-header-left">
+            <span class="case-section-tag">CASE STUDIES</span>
+            <h2 class="case-section-heading">Real Work. Real Result</h2>
+          </div>
+          <div class="case-slider-nav">
+            <div class="case-slider-pills" id="case-slider-pills">
+              <button class="case-pill-btn active" data-slide="0">01 / Men's Clothing</button>
+              <button class="case-pill-btn" data-slide="1">02 / Wellness Brand</button>
+              <button class="case-pill-btn" data-slide="2">03 / Real Estate</button>
+            </div>
+            <div class="case-slider-arrows">
+              <button class="slider-arrow-btn" id="case-prev" aria-label="Previous Case Study">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 18l-6-6 6-6"/>
+                </svg>
+              </button>
+              <button class="slider-arrow-btn" id="case-next" aria-label="Next Case Study">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 18l6-6-6-6"/>
+                </svg>
+              </button>
             </div>
           </div>
+        </div>
 
-          <!-- Right Column: Editorial Case Breakdown -->
-          <div class="case-study-right-content">
-            <h3 class="case-client-name">Men's Clothing</h3>
-            <div class="case-client-tags">
-              <span>• Dubai</span>
-              <span>• Paid Media</span>
-              <span>• Meta & Google</span>
-            </div>
-
-            <div class="case-block">
-              <h4 class="case-block-title">The Problem</h4>
-              <p class="case-block-desc">
-                Rising customer acquisition costs, ad fatigue across Meta and Google, and declining return customer frequency in an intensely competitive fashion market. Traditional broad campaigns were failing to convert traffic into profitable unit economics.
-              </p>
-            </div>
-
-            <div class="case-block">
-              <h4 class="case-block-title">The Solution</h4>
-              <p class="case-block-desc">
-                Re-engineered the complete customer acquisition journey. Deployed high-velocity creative testing frameworks with lifestyle and product hooks, built multi-step landing page funnels with size/fit calculators, and integrated post-purchase retention systems that scaled blended ROAS.
-              </p>
-            </div>
-
-            <!-- Measurable Improvements Metrics -->
-            <div class="case-improvements-wrap">
-              <p class="case-improvements-title">These shifts translated into measurable improvements:</p>
-              <div class="case-metrics-grid">
-                <div class="case-m-item">
-                  <span class="case-m-val" data-target="62">+62%</span>
-                  <span class="case-m-lbl">Increase in online orders</span>
+        <!-- Slider Container -->
+        <div class="case-slider-track-wrap" id="case-slider-wrap">
+          <!-- Slide 1: Men's Clothing -->
+          <div class="case-slide active" data-slide-index="0">
+            <div class="case-study-split-grid">
+              <div class="case-study-left-visual">
+                <div class="case-card-photo">
+                  <img src="https://framerusercontent.com/images/TgD2gKSlOfhH9eJku8ilavEy2Vs.jpg?width=1800&height=2400" alt="Men's Clothing Case Study">
                 </div>
-                <div class="case-m-item">
-                  <span class="case-m-val" data-target="40">+40%</span>
-                  <span class="case-m-lbl">Return customer rate</span>
+              </div>
+              <div class="case-study-right-content">
+                <h3 class="case-client-name">Men's Clothing</h3>
+                <div class="case-client-tags">
+                  <span>• Paid Media</span>
+                  <span>• Meta & Google</span>
                 </div>
-                <div class="case-m-item">
-                  <span class="case-m-val" data-target="78">+78%</span>
-                  <span class="case-m-lbl">Brand recognition</span>
+
+                <div class="case-block">
+                  <h4 class="case-block-title">THE CHALLENGE</h4>
+                  <p class="case-block-desc">
+                    The brand had a strong product but almost no online sales. Their store wasn't converting, paid campaigns burned budget on irrelevant traffic, customer acquisition costs kept climbing, and ad fatigue set in fast. Revenue was flat and every new order cost more than the last. In one of the most competitive fashion markets in the world, "more spend" wasn't the answer.
+                  </p>
                 </div>
-                <div class="case-m-item">
-                  <span class="case-m-val" data-target="18">+18%</span>
-                  <span class="case-m-lbl">Conversion rate</span>
+
+                <div class="case-block">
+                  <h4 class="case-block-title">THE SOLUTION</h4>
+                  <p class="case-block-desc">
+                    I rebuilt the entire acquisition journey from the ground up. Sharper audience targeting replaced spray-and-pray reach. A high-velocity creative testing framework, lifestyle hooks against product hooks, kept winning ads fresh and drove cost-per-result down. Multi-step landing funnels and post-purchase retention flows turned one-time buyers into repeat customers. Every rupee was measured against one number: profitable, blended ROAS.<br><br>
+                    <strong>The result:</strong> A struggling store became a consistent revenue engine, scaling to a 4.96x ROAS on the main campaign and bringing in steady, profitable sales month after month.
+                  </p>
+                </div>
+
+                <div class="case-improvements-wrap">
+                  <p class="case-improvements-title">These shifts translated into measurable improvements:</p>
+                  <div class="case-metrics-grid">
+                    <div class="case-m-item">
+                      <span class="case-m-val">4.96x</span>
+                      <span class="case-m-lbl">ROAS on core campaign</span>
+                    </div>
+                    <div class="case-m-item">
+                      <span class="case-m-val">₹28.7L</span>
+                      <span class="case-m-lbl">Purchase value generated</span>
+                    </div>
+                    <div class="case-m-item">
+                      <span class="case-m-val">3,353</span>
+                      <span class="case-m-lbl">Website purchases driven</span>
+                    </div>
+                    <div class="case-m-item">
+                      <span class="case-m-val">₹855</span>
+                      <span class="case-m-lbl">Average order value</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <!-- Slide 2: Wellness Brand -->
+          <div class="case-slide" data-slide-index="1">
+            <div class="case-study-split-grid">
+              <div class="case-study-left-visual">
+                <div class="case-card-photo">
+                  <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1200&auto=format&fit=crop" alt="Wellness Brand Case Study">
+                </div>
+              </div>
+              <div class="case-study-right-content">
+                <h3 class="case-client-name">Wellness Brand</h3>
+                <div class="case-client-tags">
+                  <span>• Paid Media</span>
+                  <span>• Meta & Google</span>
+                  <span>• Organic social Media</span>
+                </div>
+
+                <div class="case-block">
+                  <h4 class="case-block-title">THE CHALLENGE</h4>
+                  <p class="case-block-desc">
+                    A premium, high-ticket product in a category most people had never heard of. Low awareness of PEMF therapy made it hard to build trust, and even harder to sell expensive devices online — to both everyday consumers and B2B buyers.
+                  </p>
+                </div>
+
+                <div class="case-block">
+                  <h4 class="case-block-title">THE SOLUTION</h4>
+                  <p class="case-block-desc">
+                    I engineered a full-funnel system where organic and paid worked as one. Education-first content built authority and warmed a cold market, while precision Meta & Google campaigns captured that demand at the exact moment of intent. Two audiences, two buying journeys, one machine — D2C conversions and B2B enquiries pulled from the same funnel, every rupee measured against profitable return.<br><br>
+                    <strong>The results:</strong> A lesser-known category became a demand-generating brand — a reliable engine producing high-quality B2B leads while driving consistent, profitable online sales of premium products, month after month.
+                  </p>
+                </div>
+
+                <div class="case-improvements-wrap">
+                  <p class="case-improvements-title">These shifts translated into measurable improvements:</p>
+                  <div class="case-metrics-grid">
+                    <div class="case-m-item">
+                      <span class="case-m-val">4.25x</span>
+                      <span class="case-m-lbl">ROAS — AED 4.25 back for every AED 1 spent</span>
+                    </div>
+                    <div class="case-m-item">
+                      <span class="case-m-val">68%</span>
+                      <span class="case-m-lbl">Lower cost per acquisition after optimisation</span>
+                    </div>
+                    <div class="case-m-item">
+                      <span class="case-m-val">AED 6.8L</span>
+                      <span class="case-m-lbl">Online sales driven, D2C</span>
+                    </div>
+                    <div class="case-m-item">
+                      <span class="case-m-val">-41%</span>
+                      <span class="case-m-lbl">Drop in cost-per-lead over the campaign</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3: Real Estate Company -->
+          <div class="case-slide" data-slide-index="2">
+            <div class="case-study-split-grid">
+              <div class="case-study-left-visual">
+                <div class="case-card-photo">
+                  <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" alt="Real Estate Case Study">
+                </div>
+              </div>
+              <div class="case-study-right-content">
+                <h3 class="case-client-name">Real Estate Company</h3>
+                <div class="case-client-tags">
+                  <span>• Paid Media</span>
+                  <span>• Meta</span>
+                </div>
+
+                <div class="case-block">
+                  <h4 class="case-block-title">THE CHALLENGE</h4>
+                  <p class="case-block-desc">
+                    Inconsistent lead flow and poor lead quality. The team couldn't rely on a steady pipeline, and the leads that did come in rarely converted — making it impossible to plan sales or forecast growth.
+                  </p>
+                </div>
+
+                <div class="case-block">
+                  <h4 class="case-block-title">THE SOLUTION</h4>
+                  <p class="case-block-desc">
+                    I rebuilt their lead-generation system from the ground up. Tighter targeting, stronger offers, and qualification built directly into the funnel — so the campaigns attracted serious, ready-to-act buyers instead of cheap clicks. Every lead was engineered to reach the sales team already warm.<br><br>
+                    <strong>The Result:</strong> The pipeline was consistently full of quality leads at a healthy CPL, and the site-visit booking rate climbed, turning leads into real sales conversations, not dead ends.
+                  </p>
+                </div>
+
+                <div class="case-improvements-wrap">
+                  <p class="case-improvements-title">These shifts translated into measurable improvements:</p>
+                  <div class="case-metrics-grid">
+                    <div class="case-m-item">
+                      <span class="case-m-val">₹10L+</span>
+                      <span class="case-m-lbl">Ad spend managed & optimised</span>
+                    </div>
+                    <div class="case-m-item">
+                      <span class="case-m-val">-58%</span>
+                      <span class="case-m-lbl">Reduction in cost per lead</span>
+                    </div>
+                    <div class="case-m-item">
+                      <span class="case-m-val">+23%</span>
+                      <span class="case-m-lbl">Higher site-visit booking rate</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Auto-slider Progress Bar -->
+        <div class="case-slider-progress-track">
+          <div class="case-slider-progress-fill" id="case-progress-fill"></div>
         </div>
       </div>
     </section>
@@ -678,7 +819,7 @@
 
             <!-- Portrait Image -->
             <div class="reflections-portrait-wrap">
-              <img id="ref-active-img" src="https://framerusercontent.com/images/91tSqsa2UCoJo8t9Pw7JOunYw.jpg?width=600&height=750" alt="Client Portrait">
+              <img id="ref-active-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&height=750&auto=format&fit=crop" alt="Sneha Agarwal">
             </div>
 
             <!-- Giant Index Number -->
@@ -690,42 +831,49 @@
             <div class="reflections-quote-wrap">
               <div class="reflections-dot-accent" aria-hidden="true"></div>
               <blockquote class="reflections-active-quote" id="ref-active-quote">
-                “Himanshu Jain® turned our complex product messaging into something sharp, clear, and high-converting. They identified growth bottlenecks quickly and built an acquisition engine that unlocked predictable monthly pipeline.”
+                “Himanshu has been running our Meta and Google ads for close to a year now and it’s been a genuinely smooth partnership. He understands our brand, is proactive with ideas, and always works towards real numbers, not just reach. Our ROAS has stayed consistent even as we scaled spend.”
               </blockquote>
             </div>
             <div class="reflections-active-meta">
-              <strong id="ref-active-name">Siddharth M.</strong>
-              <span id="ref-active-role">Managing Director, Luxury Real Estate India</span>
+              <strong id="ref-active-name">Sneha Agarwal</strong>
+              <span id="ref-active-role">Marketing Head, FMCG Brand</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= 12. CONVERSATIONAL CONTACT FORM ================= -->
+    <!-- ================= 12. CONVERSATIONAL CONTACT FORM (Page 4 Layout) ================= -->
     <section id="contact" class="contact-section" data-section="contact">
       <div class="container">
-        <h2 class="contact-giant-title" data-reveal>Let's Talk!</h2>
+        <div class="contact-title-wrap">
+          <h2 class="contact-giant-title" data-reveal>Let's Talk!</h2>
+          <div class="contact-dot-accent" aria-hidden="true"></div>
+        </div>
 
         <form class="conversational-form" id="contact-form" onsubmit="event.preventDefault(); alert('Thank you! Himanshu Jain will get in touch within 24 hours.');">
           <div class="form-line">
             <span class="form-text">Hey Himanshu®, my name is</span>
             <input type="text" class="form-input" placeholder="Your Name *" required>
+            <span class="form-text">and I'm writing from</span>
           </div>
           <div class="form-line">
-            <span class="form-text">and I'm writing from</span>
-            <input type="text" class="form-input" placeholder="Company Name *" required>
+            <input type="text" class="form-input" placeholder="Company Name" required>
             <span class="form-text">.</span>
           </div>
           <div class="form-line">
-            <span class="form-text">I'm getting in touch because I'd like to</span>
+            <span class="form-text">You can contact me at</span>
+            <input type="email" class="form-input" placeholder="Email *" required>
           </div>
-          <div class="form-line form-line--full">
-            <textarea class="form-textarea" placeholder="Describe your growth goals, target markets, or current ad bottlenecks *" rows="3" required></textarea>
+          <div class="form-line">
+            <span class="form-text">. Looking forward to your reply!</span>
           </div>
+
+          <p class="form-privacy-note">By submitting, you agree to our <strong>Terms</strong> and <strong>Privacy Policy</strong>.</p>
+
           <div class="form-submit-row">
             <button type="submit" class="submit-btn">
-              <span>Send Message</span>
+              <span>Get in Touch</span>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3.75 9H14.25M14.25 9L9.75 4.5M14.25 9L9.75 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -736,7 +884,7 @@
     </section>
 
     <!-- ================= 13. FAQ ACCORDION ================= -->
-    <section class="faq-section">
+    <section class="faq-section" id="faq">
       <div class="container faq-layout">
         <div class="faq-left">
           <h2 class="faq-heading">Frequently Asked Questions</h2>
@@ -777,7 +925,7 @@
       </div>
     </section>
 
-    <!-- ================= 14. FOOTER (Exact Mobius Full-Bleed Title) ================= -->
+    <!-- ================= 14. FOOTER (Exact Client Content & Mobius 1:1 Design) ================= -->
     <footer class="site-footer">
       <div class="container">
         <!-- Giant Full-Bleed Footer Title -->
@@ -787,34 +935,63 @@
         </div>
 
         <div class="footer-grid">
-          <!-- Newsletter / Consultation -->
-          <div class="footer-col footer-col--newsletter">
-            <p>Join our newsletter for thoughts on customer acquisition systems, performance creative direction, and full-funnel CRO — sent occasionally.</p>
-            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed!');">
-              <input type="email" placeholder="YOUR EMAIL HERE" required>
-              <button type="submit" aria-label="Submit">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3.75 9H14.25M14.25 9L9.75 4.5M14.25 9L9.75 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </form>
+          <!-- Column 1: Brand & Positioning -->
+          <div class="footer-col footer-col--brand">
+            <h4 class="footer-col-brand-name">Himanshu Jain</h4>
+            <span class="footer-col-subtitle">Performance Marketing</span>
+            <h5 class="footer-col-tagline">Real Growth, Real Numbers</h5>
+            <p class="footer-col-desc">No fluff, no vanity metrics. Just performance marketing that turns ad spend into real, trackable revenue for your business.</p>
           </div>
 
-          <!-- Social Links -->
-          <div class="footer-col footer-col--social">
-            <p class="col-tag">SOCIAL</p>
-            <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://twitter.com" target="_blank" rel="noopener">X (Twitter)</a>
-            <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+          <!-- Column 2: Quick Links -->
+          <div class="footer-col">
+            <p class="col-tag">QUICK LINKS</p>
+            <a href="#manifesto">About</a>
+            <a href="#numbers">Results</a>
+            <a href="#process">Process</a>
+            <a href="#faq">FAQ’s</a>
+            <a href="#contact">Contact</a>
           </div>
 
-          <!-- Legal / Locations -->
-          <div class="footer-col footer-col--legal">
-            <p class="col-tag">LOCATIONS & PRACTICE</p>
-            <a href="#">New Delhi, India</a>
-            <a href="#">Dubai, UAE</a>
-            <a href="#">New York, USA</a>
-            <a href="#">Privacy Policy</a>
+          <!-- Column 3: Services -->
+          <div class="footer-col">
+            <p class="col-tag">SERVICES</p>
+            <a href="#services">Meta Ads</a>
+            <a href="#services">Google Ads</a>
+            <a href="#services">Lead Generation</a>
+            <a href="#services">E-commerce / D2C Scaling</a>
+            <a href="#services">Creative & Funnel Strategy</a>
+          </div>
+
+          <!-- Column 4: Contact & Social -->
+          <div class="footer-col footer-col--contact">
+            <p class="col-tag">CONTACT</p>
+            <a href="tel:+919811778972" class="footer-contact-link">
+              <svg class="f-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <span>+91 9811778972</span>
+            </a>
+            <a href="mailto:himanshujain8972@gmail.com" class="footer-contact-link">
+              <svg class="f-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <span>himanshujain8972@gmail.com</span>
+            </a>
+            <p class="footer-contact-location">
+              <svg class="f-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 2px;">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <span>Serving clients across India, USA, UAE &amp; UK</span>
+            </p>
+            <a href="https://wa.me/919811778972" target="_blank" rel="noopener" class="footer-contact-link">
+              <svg class="f-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.59c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.07-.25-.12-1.05-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.84-.86 2.05s.88 2.38 1 2.54c.12.17 1.73 2.64 4.2 3.7.59.25 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.23-.17-.48-.29z"/>
+              </svg>
+              <span>WhatsApp: wa.me/919811778972</span>
+            </a>
           </div>
         </div>
       </div>

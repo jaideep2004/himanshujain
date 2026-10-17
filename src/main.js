@@ -595,113 +595,154 @@ if (processSec) {
   }
 }
 
-// ——— 09. FEATURED CASE STUDY: MEN'S CLOTHING PARALLAX & LIVE METRIC COUNTERS ———
-const caseSection = document.querySelector('.featured-case-section')
-const casePhoto = document.querySelector('.case-card-photo')
-const caseImg = document.querySelector('.case-card-photo img')
-const caseTitle = document.querySelector('.case-client-name')
-const caseTags = document.querySelectorAll('.case-client-tags span')
-const caseBlocks = document.querySelectorAll('.case-block')
-const caseMetricVals = document.querySelectorAll('.case-m-val')
+// ——— 09. REAL WORK. REAL RESULT — CASE STUDIES AUTO-SLIDER ———
+const caseSection = document.getElementById('case-studies')
+const caseSlides = document.querySelectorAll('.case-slide')
+const casePills = document.querySelectorAll('.case-pill-btn')
+const casePrevBtn = document.getElementById('case-prev')
+const caseNextBtn = document.getElementById('case-next')
+const caseProgressFill = document.getElementById('case-progress-fill')
+const caseSliderWrap = document.getElementById('case-slider-wrap')
 
-if (caseSection) {
-  // Photo Reveal with smooth scale & parallax
-  if (casePhoto && caseImg) {
-    gsap.from(casePhoto, {
-      y: 40,
-      opacity: 0.7,
-      duration: 1.1,
-      ease: 'expo.out',
-      scrollTrigger: {
-        trigger: caseSection,
-        start: 'top 75%'
+if (caseSection && caseSlides.length > 0) {
+  let activeCaseIdx = 0
+  const totalCaseSlides = caseSlides.length
+  const SLIDE_DURATION = 6500 // 6.5s per case study slide
+  let progressAnim = null
+  let isHovered = false
+
+  function switchCaseSlide(nextIdx, direction = 1) {
+    if (nextIdx === activeCaseIdx) return
+    
+    const prevSlide = caseSlides[activeCaseIdx]
+    const nextSlide = caseSlides[nextIdx]
+    
+    // Update navigation pills
+    casePills.forEach((p, idx) => {
+      p.classList.toggle('active', idx === nextIdx)
+    })
+
+    // Smooth crossfade transition
+    gsap.to(prevSlide, {
+      opacity: 0,
+      x: direction > 0 ? -24 : 24,
+      duration: 0.45,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        prevSlide.classList.remove('active')
+        gsap.set(prevSlide, { clearProps: 'x,opacity' })
       }
     })
 
-    gsap.fromTo(caseImg,
-      { yPercent: -6, scale: 1.08 },
-      {
-        yPercent: 6,
-        scale: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: caseSection,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1
+    nextSlide.classList.add('active')
+    gsap.fromTo(nextSlide,
+      { opacity: 0, x: direction > 0 ? 24 : -24 },
+      { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }
+    )
+
+    // Stagger metric items inside next slide
+    const metrics = nextSlide.querySelectorAll('.case-m-item')
+    if (metrics.length > 0) {
+      gsap.fromTo(metrics,
+        { y: 14, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.4, stagger: 0.06, ease: 'power2.out', delay: 0.15 }
+      )
+    }
+
+    activeCaseIdx = nextIdx
+    startCaseProgress()
+  }
+
+  function startCaseProgress() {
+    if (progressAnim) progressAnim.kill()
+    if (!caseProgressFill) return
+    
+    gsap.set(caseProgressFill, { width: '0%' })
+    progressAnim = gsap.to(caseProgressFill, {
+      width: '100%',
+      duration: SLIDE_DURATION / 1000,
+      ease: 'none',
+      onComplete: () => {
+        if (!isHovered) {
+          const nextIdx = (activeCaseIdx + 1) % totalCaseSlides
+          switchCaseSlide(nextIdx, 1)
         }
       }
-    )
-  }
-
-  // Right Column Cascade
-  const rightColTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.case-details-col',
-      start: 'top 75%'
-    }
-  })
-
-  if (caseTitle) {
-    rightColTl.from(caseTitle, { y: 30, opacity: 0, duration: 0.7, ease: 'expo.out' })
-  }
-  if (caseTags.length > 0) {
-    rightColTl.from(caseTags, { opacity: 0, y: 10, stagger: 0.08, duration: 0.4, ease: 'power2.out' }, '-=0.4')
-  }
-  if (caseBlocks.length > 0) {
-    rightColTl.from(caseBlocks, { y: 25, opacity: 0, stagger: 0.15, duration: 0.6, ease: 'power2.out' }, '-=0.2')
-  }
-
-  // Live Counting Metric Values
-  if (caseMetricVals.length > 0) {
-    ScrollTrigger.create({
-      trigger: '.case-metrics-grid',
-      start: 'top 85%',
-      once: true,
-      onEnter: () => {
-        caseMetricVals.forEach((el, idx) => {
-          const target = parseFloat(el.getAttribute('data-target')) || 0
-          const obj = { val: 0 }
-          
-          gsap.from(el, { y: 20, opacity: 0, duration: 0.5, delay: idx * 0.1, ease: 'power2.out' })
-          
-          gsap.to(obj, {
-            val: target,
-            duration: 1.4,
-            delay: idx * 0.1,
-            ease: 'power3.out',
-            onUpdate: () => {
-              el.textContent = `+${Math.round(obj.val)}%`
-            }
-          })
-        })
-      }
     })
   }
+
+  function pauseCaseSlider() {
+    isHovered = true
+    if (progressAnim) progressAnim.pause()
+  }
+
+  function resumeCaseSlider() {
+    isHovered = false
+    if (progressAnim) progressAnim.resume()
+  }
+
+  // Pill navigation handlers
+  casePills.forEach((pill, idx) => {
+    pill.addEventListener('click', () => {
+      const dir = idx > activeCaseIdx ? 1 : -1
+      switchCaseSlide(idx, dir)
+    })
+  })
+
+  // Arrow button handlers
+  if (casePrevBtn) {
+    casePrevBtn.addEventListener('click', () => {
+      const prevIdx = (activeCaseIdx - 1 + totalCaseSlides) % totalCaseSlides
+      switchCaseSlide(prevIdx, -1)
+    })
+  }
+
+  if (caseNextBtn) {
+    caseNextBtn.addEventListener('click', () => {
+      const nextIdx = (activeCaseIdx + 1) % totalCaseSlides
+      switchCaseSlide(nextIdx, 1)
+    })
+  }
+
+  // Pause on hover
+  if (caseSliderWrap) {
+    caseSliderWrap.addEventListener('mouseenter', pauseCaseSlider)
+    caseSliderWrap.addEventListener('mouseleave', resumeCaseSlider)
+  }
+
+  // Start initial auto slider when scrolled into view
+  ScrollTrigger.create({
+    trigger: caseSection,
+    start: 'top 80%',
+    once: true,
+    onEnter: () => {
+      startCaseProgress()
+    }
+  })
 }
 
 // ——— 10. CLIENT REFLECTIONS (Mobius 1:1 Interactive Auto-Slider) ———
 const testimonialsData = [
   {
     idx: '/1',
-    img: 'https://framerusercontent.com/images/91tSqsa2UCoJo8t9Pw7JOunYw.jpg?width=600&height=750',
-    quote: '“Himanshu Jain® turned our complex product messaging into something sharp, clear, and high-converting. They identified growth bottlenecks quickly and built an acquisition engine that unlocked predictable monthly pipeline.”',
-    name: 'Siddharth M.',
-    role: 'Managing Director, Luxury Real Estate India'
+    img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&height=750&auto=format&fit=crop',
+    quote: '“Himanshu has been running our Meta and Google ads for close to a year now and it’s been a genuinely smooth partnership. He understands our brand, is proactive with ideas, and always works towards real numbers, not just reach. Our ROAS has stayed consistent even as we scaled spend.”',
+    name: 'Sneha Agarwal',
+    role: 'Marketing Head, FMCG Brand'
   },
   {
     idx: '/2',
-    img: 'https://framerusercontent.com/images/JUqCPovcIKHCGuuLShMUORkvJI.jpg?width=600&height=750',
-    quote: '“They delivered a level of clarity we’d been missing for years. Himanshu Jain® took our scattered thoughts and shaped them into a cohesive identity that finally feels right.”',
-    name: 'Jonas Berg',
-    role: 'Arcton Labs'
+    img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&height=750&auto=format&fit=crop',
+    quote: '“What stood out is how clearly he explains everything. Every week we know exactly what’s working and what’s next, no confusing reports, no jargon. Within a few months he brought our cost per lead down significantly and the lead quality went up. Honestly one of the easiest people to work with.”',
+    name: 'Chirag',
+    role: 'Co-founder, Real Estate Company'
   },
   {
     idx: '/3',
-    img: 'https://framerusercontent.com/images/8s1d41G36Gw3wKjdAqv9BP0vZo.jpg?width=600&height=750',
-    quote: '“The level of attribution precision and creative agility is unmatched. They don’t just optimize ad spend; they rebuild the entire post-click economics across Google, Meta, and YouTube.”',
-    name: 'Natasha K.',
-    role: 'Head of Growth, Multi-Market D2C Brand'
+    img: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=600&height=750&auto=format&fit=crop',
+    quote: '“Our appointment bookings have gone up steadily since Himanshu took over our ads. The enquiries are serious patients now, not random clicks. He’s responsive, honest about what’s realistic, and genuinely invested in our growth. Very happy with the results.”',
+    name: 'Nick',
+    role: 'Doctor, Clinic'
   }
 ]
 
